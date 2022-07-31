@@ -15,7 +15,7 @@ volatile uint32_t percent_fade = 0;
 bool app_started = false;
 
 void app_adc_it(uint32_t tmp){
-	percent_fade = tmp;
+	percent_fade = (tmp*100)/4095;
 	app_led_fade_percent(percent_fade);
 }
 
