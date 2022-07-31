@@ -15,7 +15,7 @@ Utilização de um ADC para a conversão de um único canal mas com o emprego de
 * Configure um temporizador como base de tempo de amostragem, de forma que ele gere
 uma interrupção (use prioridade 3) com uma taxa de 10Hz. Isso irá garantir uma amostra
 a cada 100ms.
-* Configure o pino PC4 como canal para o ADC1. Use um tempo de amostragem de 28
+* Configure o pino PB11 (era PC4) como canal para o ADC1. Use um tempo de amostragem de 28
 ciclos. Como queremos apenas uma conversão por interrupção, o modo de scan deve estar
 desligado, o modo contínuo desligado, requisição contínua de DMA desligada também. O
 fim da conversão será indicado pela leitura de apenas um canal. Não configure nenhum
@@ -23,7 +23,7 @@ DMA.
 * Habilite a interrupção do ADC1, usando dois como prioridade.
 * Como feito no laboratório anterior, use o PWM do canal 1 do TIM1 (pino PA8), realizando
 o jumper do PC13 para o PA8 e deixando o PC13 flutuante. Assim será possível ver o
-brilho do led alterar de acordo com o PWM. Configure o TIM1com base de tempo igual
+brilho do led alterar de acordo com o PWM. Configure o TIM1 com base de tempo igual
 a 1kHz com o canal de PWM com ciclo útil igual a zero.
  
 #### 2. No código gerado:
