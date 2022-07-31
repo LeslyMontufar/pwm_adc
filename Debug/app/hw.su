@@ -1,0 +1,7 @@
+../app/hw.c:23:6:hw_timer_adc_start	8	static
+../app/hw.c:27:6:hw_timer_start	16	static
+../app/hw.c:31:6:hw_pwm_start	8	static
+../app/hw.c:35:6:hw_set_duty	24	static
+../app/hw.c:41:6:HAL_TIM_PeriodElapsedCallback	16	static
+../app/hw.c:51:6:HAL_ADC_ConvCpltCallback	16	static
+../app/hw.c:56:6:hw_cpu_sleep	4	static,ignoring_inline_asm

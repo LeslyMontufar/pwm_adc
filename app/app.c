@@ -20,23 +20,8 @@ void app_adc_it(uint32_t tmp){
 }
 
 void app_led_fade_percent(uint32_t percent){
-	hw_set_duty(100-percent); // o led fica em nível alto em PA8 = 0;
+	hw_set_duty(100-percent);
 }
-
-void app_led_off(void){
-	percent_fade = 0;
-	app_led_fade_percent(percent_fade);
-}
-
-//void app_button_interrupt(void){
-//	if(!app_started)
-//		return;
-//
-//	percent_fade += 10;
-//	if(percent_fade==110)
-//		percent_fade = 0;
-//	app_led_fade_percent(percent_fade);
-//}
 
 void app_init(void){
 	app_started = true;
@@ -46,5 +31,5 @@ void app_init(void){
 }
 
 void app_loop(void){
-//	hw_cpu_sleep();
+
 }
