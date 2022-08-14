@@ -42,7 +42,7 @@ funcionando adequadamente. Caso não tenha um potenciômetro, tente ver o funcio
 jumpeando para terra e VDD.
 
 ## Desenvolvimento
-1. Configurei o led para iniciar apagado, pela configuração do duty cicle do pwm, que define a corrente disponível para o led.
+1. Configurei o led para iniciar apagado, pela configuração do duty cycle do pwm, que define a corrente disponível para o led.
 ```
 void app_init(void){
 	app_started = true;
@@ -82,7 +82,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 	app_adc_it(tmp);
 }
 ```
-4. Uso para alterar o duty cicle do pwm e assim mudar a intensidade do led, a partir da corrente que recebe. Como o led PC13 internamente é uma saída do tipo push pull, então possui máximo brilho quando aterrado e mínimo quando recebe máxima tensão (3V3).
+4. Uso para alterar o duty cycle do pwm e assim mudar a intensidade do led, a partir da corrente que recebe. Como o led PC13 internamente é uma saída do tipo push pull, então possui máximo brilho quando aterrado e mínimo quando recebe máxima tensão (3V3).
 ```
 void app_adc_it(uint32_t tmp){
 	percent_fade = (tmp*100)/4095;
