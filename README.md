@@ -42,3 +42,54 @@ funcionando adequadamente. Caso não tenha um potenciômetro, tente ver o funcio
 jumpeando para terra e VDD.
 
 ## Desenvolvimento
+1. Configurei o led para iniciar apagado, pela configuração do duty cicle do pwm, que define a corrente disponível para o led.
+```
+void app_init(void){
+	app_started = true;
+	app_led_fade_percent(percent_fade);
+	hw_timer_adc_start();
+	hw_pwm_start();
+}
+```
+```
+void app_led_fade_percent(uint32_t percent){
+	hw_set_duty(100-percent);
+}
+```
+```
+void hw_set_duty(uint16_t duty) {
+	uint16_t arr = __HAL_TIM_GET_AUTORELOAD(&htim1)+1;
+	uint16_t CCR = duty*arr/100;
+	__HAL_TIM_SET_COMPARE(&htim1,PWM_CHN1, CCR-1*(CCR>0));
+}
+```
+2. Com o timer do adc ligado e o timer do pwm iniciado, o led muda o estado de acordo com as amostars coletadas pelo adc. A interrupção do adc é iniciada a cada vez que COUNTER == ARR, na função `HAL_TIM_PeriodElapsedCallback`.
+```
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if(htim == &htim1) {
+		__HAL_TIM_SET_COUNTER(&htim1, 0);
+	}
+	else if(htim == &htim2)	{
+		HAL_ADC_Start_IT(&hadc1);
+		__HAL_TIM_SET_COUNTER(&htim2, 0);
+	}
+}
+```
+3. Quando o adc já possui o valor digital da amostra na memória, coleto esse valor.
+```
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
+	tmp = HAL_ADC_GetValue(hadc);
+	app_adc_it(tmp);
+}
+```
+4. Uso para alterar o duty cicle do pwm e assim mudar a intensidade do led, a partir da corrente que recebe. Como o led PC13 internamente é uma saída do tipo push pull, então possui máximo brilho quando aterrado e mínimo quando recebe máxima tensão (3V3).
+```
+void app_adc_it(uint32_t tmp){
+	percent_fade = (tmp*100)/4095;
+	app_led_fade_percent(percent_fade);
+}
+
+void app_led_fade_percent(uint32_t percent){
+	hw_set_duty(100-percent);
+}
+```
